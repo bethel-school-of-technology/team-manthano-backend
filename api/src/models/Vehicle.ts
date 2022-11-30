@@ -12,7 +12,7 @@ interface IVehicles extends Document {
  Body_Style: string;
  Fuel_Economy: Object;
  Exterior_Color: string;
- Images: Array<string>;
+ Images: Array<String>;
  Posted_By: string;
  Posted_At: Date,
 }
@@ -43,6 +43,18 @@ const vehcileSchema: Schema<IVehicles> = new Schema({
   type: Number,
   required: true
  },
+ Condition: {
+  type: String,
+  enum: ['New', 'Used'],
+ },
+ Mileage: {
+  type: Number,
+  required: true
+ },
+ Body_Style: {
+  type: String,
+  enum: ['Convertible', 'Sedan', 'Hatchback', 'SUV/Crossover', 'Truck', 'Van/MiniVan'],
+ },
  Fuel_Economy: {
   type: {
    city: 0,
@@ -51,11 +63,12 @@ const vehcileSchema: Schema<IVehicles> = new Schema({
   }
  },
  Exterior_Color: {
+  type: String,
+  enum: ['Black', 'Blue', 'Brown', 'Burgundy', 'Gray', 'Green', 'White', 'Silver', 'Red'],
+ },
+ Images: [{
   type: String
- },
- Images: {
-  type: Array['']
- },
+ }],
  Posted_By: {
   type: String
  },
