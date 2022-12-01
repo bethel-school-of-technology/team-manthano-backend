@@ -9,3 +9,5 @@ To switch back to the dev branch, run "git checkout dev"
 Then to finally merge the featured branch that you were working on with the dev branch, run 'git merge new_branch_name'
 Then push up to the remote repo. Run 'git push'
 Before starting on another card, make sure to run 'git pull' again from the dev branch to make sure you're working with the latest code and then repeat all of the steps again.
+
+Test line here.
