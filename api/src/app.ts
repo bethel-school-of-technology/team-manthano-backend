@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'
 import mongoose from 'mongoose';
+import morgan from 'morgan';
 
 const connectionString: string = 'mongodb://localhost:27017/carShop';
 
@@ -8,6 +9,8 @@ mongoose.connect(connectionString).then(
     err => console.log('Error connecting to the database', err));
 
 const app = express();
+
+app.use(morgan('dev'));
 
 
 app.use(express.json());
