@@ -18,7 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 
 //CORS
 const cors = require('cors');
-app.use(cors());
+const corsOptions = {
+    origin: [ 'http://localhost:4200', 'http://localhost:3001' ]
+};
+app.use(cors(corsOptions));
 
 
 // routes
