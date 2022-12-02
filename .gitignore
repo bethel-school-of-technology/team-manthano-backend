@@ -3,4 +3,5 @@ api/.DS_Store
 api/node_modules/.DS_Store
 api/node_modules/date-fns/.DS_Store
 api/node_modules/date-fns/esm/.DS_Store
-api\node_modules
+api/node_modules
+/node_modules
