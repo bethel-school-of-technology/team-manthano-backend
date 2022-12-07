@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { Users, IUsers } from "../models/User";
-import { hashPassword } from "../services/auth";
+import { comparePasswords, hashPassword, signUserToken } from "../services/auth";
 
 export const createUser: RequestHandler = async (req, res, next) => {
     const newUser: IUsers = new Users({
@@ -34,7 +34,24 @@ export const createUser: RequestHandler = async (req, res, next) => {
 }
 
 export const loginUser: RequestHandler = async (req, res, next) => {
+    let existingUser: IUsers | null = await Users.findOne(
+        { username: req.body.username }
+    );
 
+    if (existingUser) {
+        let passwordsMatch = await comparePasswords(req.body.password, existingUser.password);
+
+        if (passwordsMatch) {
+            let token = await signUserToken(existingUser);
+            res.status(200).json({ token });
+        }
+        else {
+            res.status(401).json('Invalid password');
+        }
+    }
+    else {
+        res.status(401).json('Invalid username');
+    }
 }
 
 export const getUser: RequestHandler = async (req, res, next) => {
