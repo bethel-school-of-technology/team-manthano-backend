@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { Users, IUsers } from "../models/User";
-import { comparePasswords, hashPassword, signUserToken } from "../services/auth";
+import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../services/auth";
 
 export const createUser: RequestHandler = async (req, res, next) => {
     const newUser: IUsers = new Users({
@@ -64,7 +64,28 @@ export const getUsers: RequestHandler = async (req, res, next) => {
 }
 
 export const updateUser: RequestHandler = async (req, res, next) => {
+    let user: IUsers | null = await verifyUser(req);
 
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let userId = req.params.id;
+    const updatedUser: IUsers = new Users({
+        _id: userId,
+        username: req.body.username,
+        email: req.body.email,
+        phone: req.body.phone,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        zip: req.body.zip,
+        profile_image: req.body.profile_image
+    });
+
+    await Users.findByIdAndUpdate(userId, { $set: updatedUser })
+
+    res.status(200).json(updatedUser);
 }
 
 export const deleteUser: RequestHandler = async (req, res, next) => {
