@@ -55,12 +55,12 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 }
 
 export const getUser: RequestHandler = async (req, res, next) => {
-    let userList = await Users.find();
-    res.status(200).json(userList)
+    
 }
 
 export const getUsers: RequestHandler = async (req, res, next) => {
-
+    let userList = await Users.find();
+    res.status(200).json(userList)
 }
 
 export const updateUser: RequestHandler = async (req, res, next) => {
