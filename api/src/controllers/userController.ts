@@ -89,5 +89,13 @@ export const updateUser: RequestHandler = async (req, res, next) => {
 }
 
 export const deleteUser: RequestHandler = async (req, res, next) => {
+    let user: IUsers | null = await verifyUser(req);
 
+    if(!user) {
+        return res.status(403).send();
+    }
+
+    let userId =req.params.id;
+    let result = await Users.findByIdAndDelete(userId);
+    res.status(200).json(result);
 }
