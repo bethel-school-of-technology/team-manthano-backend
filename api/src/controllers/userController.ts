@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { Users, IUsers } from "../models/User";
+import { Vehicles } from "../models/Vehicle";
 import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../services/auth";
 
 export const createUser: RequestHandler = async (req, res, next) => {
@@ -55,7 +56,19 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 }
 
 export const getUser: RequestHandler = async (req, res, next) => {
-    
+    let user: IUsers | null = await verifyUser(req);
+
+    let userVehicles
+    if (user) {
+        userVehicles = await Vehicles.find({ userId: user._id })
+    }
+
+    let allData = {
+        user: user,
+        vehicles: userVehicles
+    }
+
+    res.status(200).json(allData);
 }
 
 export const getUsers: RequestHandler = async (req, res, next) => {
