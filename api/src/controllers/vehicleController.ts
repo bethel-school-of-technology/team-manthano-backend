@@ -1,23 +1,71 @@
 import { RequestHandler } from "express";
 import { Vehicles, IVehicles } from "../models/Vehicle";
 import { IUsers } from "../models/User";
+import { verifyUser } from "../services/auth";
 
 export const getAllVehicles: RequestHandler = async (req, res, next) => {
-    
+    let vehicleList = await Vehicles.find();
+    res.status(200).json(vehicleList);
 }
 
 export const getOneVehicle: RequestHandler = async (req, res, next) => {
-    
+    let itemId = req.params.id;
+    let vehicle = await Vehicles.findById(itemId);
+    res.status(200).json(vehicle);
 }
 
 export const addVehicle: RequestHandler = async (req, res, next) => {
-   
+    let user: IUsers | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    const newVehicle: IVehicles = new Vehicles({
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price
+    });
+
+    try {
+        await newVehicle.save();
+        res.status(201).json(newVehicle);
+    }
+    catch (err) {
+        res.status(400).send(err);
+    }
 }
 
 export const editVehicle: RequestHandler = async (req, res, next) => {
-    
+    let user: IUsers | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let itemId = req.params.id;
+    const updatedVehicle: IVehicles = new Vehicles({
+        _id: itemId,
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price
+    });
+
+    await Vehicles.findByIdAndUpdate(itemId, { $set: updatedVehicle })
+
+    res.status(200).json(updatedVehicle);
 }
 
 export const deleteVehicle: RequestHandler = async (req, res, next) => {
+
+    let user: IUsers | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let itemId = req.params.id;
+    let result = await Vehicles.findByIdAndDelete(itemId);
+    res.status(200).json(result);
    
 }
