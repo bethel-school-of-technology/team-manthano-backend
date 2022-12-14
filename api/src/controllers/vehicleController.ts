@@ -22,9 +22,17 @@ export const addVehicle: RequestHandler = async (req, res, next) => {
     }
 
     const newVehicle: IVehicles = new Vehicles({
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price
+        Name: req.body.Name,
+        Vehicle_Manufacturer: req.body.Vehicle_Manufacturer,
+        Year: req.body.Year,
+        Condition: req.body.Condition,
+        Price: req.body.Price,
+        Mileage: req.body.Mileage,
+        Body_Style: req.body.Body_Style,
+        Fuel_Economy: req.body.Fuel_Economy,
+        Exterior_Color: req.body.Exterior_Color,
+        Images: req.body.Images,
+        Posted_At: req.body.Posted_At
     });
 
     try {
@@ -46,9 +54,17 @@ export const editVehicle: RequestHandler = async (req, res, next) => {
     let itemId = req.params.id;
     const updatedVehicle: IVehicles = new Vehicles({
         _id: itemId,
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price
+        Name: req.body.Name,
+        Vehicle_Manufacturer: req.body.Vehicle_Manufacturer,
+        Year: req.body.Year,
+        Condition: req.body.Condition,
+        Price: req.body.Price,
+        Mileage: req.body.Mileage,
+        Body_Style: req.body.Body_Style,
+        Fuel_Economy: req.body.Fuel_Economy,
+        Exterior_Color: req.body.Exterior_Color,
+        Images: req.body.Images,
+        Posted_At: req.body.Posted_At
     });
 
     await Vehicles.findByIdAndUpdate(itemId, { $set: updatedVehicle })
@@ -67,5 +83,5 @@ export const deleteVehicle: RequestHandler = async (req, res, next) => {
     let itemId = req.params.id;
     let result = await Vehicles.findByIdAndDelete(itemId);
     res.status(200).json(result);
-   
+
 }
