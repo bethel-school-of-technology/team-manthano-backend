@@ -30,6 +30,7 @@ const addVehicle = async (req, res, next) => {
         Fuel_Economy: req.body.Fuel_Economy,
         Exterior_Color: req.body.Exterior_Color,
         Images: req.body.Images,
+        Posted_By: user._id,
         Posted_At: req.body.Posted_At
     });
     try {
@@ -43,7 +44,7 @@ const addVehicle = async (req, res, next) => {
 exports.addVehicle = addVehicle;
 const editVehicle = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    if (!user) {
+    if (!user || user._id !== req.body.id) {
         return res.status(403).send();
     }
     let itemId = req.params.id;
@@ -59,6 +60,7 @@ const editVehicle = async (req, res, next) => {
         Fuel_Economy: req.body.Fuel_Economy,
         Exterior_Color: req.body.Exterior_Color,
         Images: req.body.Images,
+        Posted_By: req.body.Posted_By,
         Posted_At: req.body.Posted_At
     });
     await Vehicle_1.Vehicles.findByIdAndUpdate(itemId, { $set: updatedVehicle });
@@ -67,7 +69,7 @@ const editVehicle = async (req, res, next) => {
 exports.editVehicle = editVehicle;
 const deleteVehicle = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    if (!user) {
+    if (!user || user._id !== req.body.id) {
         return res.status(403).send();
     }
     let itemId = req.params.id;

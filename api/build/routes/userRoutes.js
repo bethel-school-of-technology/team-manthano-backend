@@ -8,5 +8,5 @@ router.post('/login', userController_1.loginUser);
 router.get('/', userController_1.getUsers);
 router.put('/:id', userController_1.updateUser);
 router.delete('/:id', userController_1.deleteUser);
-router.get('/oneUser', userController_1.getUser);
+router.get('/:id', userController_1.getUser);
 exports.default = router;

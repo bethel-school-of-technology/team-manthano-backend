@@ -8,6 +8,6 @@ router.post('/login', loginUser);
 router.get('/', getUsers);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
-router.get('/oneUser', getUser)
+router.get('/:id', getUser)
 
 export default router;

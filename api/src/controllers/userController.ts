@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { Aggregate } from "mongoose";
 import { Users, IUsers } from "../models/User";
 import { Vehicles } from "../models/Vehicle";
 import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../services/auth";
@@ -15,8 +16,8 @@ export const createUser: RequestHandler = async (req, res, next) => {
         profile_image: req.body.profile_image
     });
 
-    try{
-        if(newUser.username && newUser.password) {
+    try {
+        if (newUser.username && newUser.password) {
             let hashedPassword = await hashPassword(newUser.password);
             newUser.password = hashedPassword;
             let created = await newUser.save();
@@ -58,9 +59,9 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 export const getUser: RequestHandler = async (req, res, next) => {
     let user: IUsers | null = await verifyUser(req);
 
-    let userVehicles
+    let userVehicles;
     if (user) {
-        userVehicles = await Vehicles.find({ userId: user._id })
+        userVehicles = await (await Vehicles.find({})).filter(vehicle => vehicle.Posted_By == user?._id);
     }
 
     let allData = {
@@ -104,11 +105,11 @@ export const updateUser: RequestHandler = async (req, res, next) => {
 export const deleteUser: RequestHandler = async (req, res, next) => {
     let user: IUsers | null = await verifyUser(req);
 
-    if(!user) {
+    if (!user) {
         return res.status(403).send();
     }
 
-    let userId =req.params.id;
+    let userId = req.params.id;
     let result = await Users.findByIdAndDelete(userId);
     res.status(200).json(result);
 }

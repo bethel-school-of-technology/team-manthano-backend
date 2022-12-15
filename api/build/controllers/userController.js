@@ -55,7 +55,7 @@ const getUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     let userVehicles;
     if (user) {
-        userVehicles = await Vehicle_1.Vehicles.find({ userId: user._id });
+        userVehicles = await (await Vehicle_1.Vehicles.find({})).filter(vehicle => vehicle.Posted_By == user?._id);
     }
     let allData = {
         user: user,
