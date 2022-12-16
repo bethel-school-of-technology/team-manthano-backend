@@ -1,5 +1,4 @@
 import { RequestHandler } from "express";
-import { Aggregate } from "mongoose";
 import { Users, IUsers } from "../models/User";
 import { Vehicles } from "../models/Vehicle";
 import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../services/auth";

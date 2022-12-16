@@ -32,6 +32,7 @@ export const addVehicle: RequestHandler = async (req, res, next) => {
         Fuel_Economy: req.body.Fuel_Economy,
         Exterior_Color: req.body.Exterior_Color,
         Images: req.body.Images,
+        Status: req.body.Status,
         Posted_By: user._id,
         Posted_At: req.body.Posted_At
     });
@@ -48,7 +49,9 @@ export const addVehicle: RequestHandler = async (req, res, next) => {
 export const editVehicle: RequestHandler = async (req, res, next) => {
     let user: IUsers | null = await verifyUser(req);
 
-    if (!user || user._id !== req.body.id) {
+    if (!user || user._id != req.body.Posted_By) {
+        console.log("USER: ", user?._id)
+        console.log("POST: ", req.body.Posted_By)
         return res.status(403).send();
     }
 
@@ -65,6 +68,7 @@ export const editVehicle: RequestHandler = async (req, res, next) => {
         Fuel_Economy: req.body.Fuel_Economy,
         Exterior_Color: req.body.Exterior_Color,
         Images: req.body.Images,
+        Status: req.body.Status,
         Posted_By: req.body.Posted_By,
         Posted_At: req.body.Posted_At
     });
@@ -78,7 +82,9 @@ export const deleteVehicle: RequestHandler = async (req, res, next) => {
 
     let user: IUsers | null = await verifyUser(req);
 
-    if (!user || user._id !== req.body.id) {
+    if (!user || user._id != req.body.Posted_By) {
+        console.log("USER: ", user?._id)
+        console.log("VEHICLE: ", req.body.Posted_By)
         return res.status(403).send();
     }
 

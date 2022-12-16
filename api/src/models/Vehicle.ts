@@ -2,9 +2,8 @@ import { Document, Schema, Model, model, Decimal128 } from 'mongoose';
 
 interface IVehicles extends Document {
  Name: string;
- // Make: string;
- // Model: string;
- Vehicle_Manufacturer: Object;
+ Vehicle_Manufacturer: String;
+ Vehicle_Make: String;
  Year: Number;
  Condition: string;
  Price: Decimal128;
@@ -13,6 +12,7 @@ interface IVehicles extends Document {
  Fuel_Economy: Object;
  Exterior_Color: string;
  Images: Array<String>;
+ Status: String;
  Posted_By: string;
  Posted_At: Date,
 }
@@ -22,22 +22,11 @@ const vehcileSchema: Schema<IVehicles> = new Schema({
   type: String,
   required: true,
  },
- // Make: {
- //  type: String,
- //  required: true
- // },
- // Model: {
- //  type: String,
- //  required: true
- // },
  Vehicle_Manufacturer: {
-  type: {
-   'Chevrolet': ['Camaro', 'Tahoe', 'Silverado'],
-   'Ford': ['Fiesta', 'Mustang', 'F-150', 'Transit'],
-   'Honda': ['Civic', 'Accord', 'CR-V', 'Ridgeline'],
-   'Dodge': ['Charger', 'Durango', 'Ram'],
-   'Toyota': ['Corolla', 'Prius', '4Runner', 'Tacoma']
-  }
+  type: String
+ },
+ Vehicle_Make: {
+  type: String,
  },
  Year: {
   type: Number,
@@ -69,6 +58,10 @@ const vehcileSchema: Schema<IVehicles> = new Schema({
  Images: [{
   type: String
  }],
+ Status: {
+  type: String,
+  enum: ['For Sale', 'Pending', 'Sold'],
+ },
  Posted_By: {
   type: String
  },

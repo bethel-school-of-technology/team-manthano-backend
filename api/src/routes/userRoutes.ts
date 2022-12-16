@@ -4,7 +4,7 @@ import { createUser, loginUser, getUsers, updateUser, deleteUser, getUser } from
 const router = Router();
 
 router.post('/', createUser);
-router.post('/login', loginUser);
+router.post('/signin', loginUser);
 router.get('/', getUsers);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);

@@ -7,22 +7,11 @@ const vehcileSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    // Make: {
-    //  type: String,
-    //  required: true
-    // },
-    // Model: {
-    //  type: String,
-    //  required: true
-    // },
     Vehicle_Manufacturer: {
-        type: {
-            'Chevrolet': ['Camaro', 'Tahoe', 'Silverado'],
-            'Ford': ['Fiesta', 'Mustang', 'F-150', 'Transit'],
-            'Honda': ['Civic', 'Accord', 'CR-V', 'Ridgeline'],
-            'Dodge': ['Charger', 'Durango', 'Ram'],
-            'Toyota': ['Corolla', 'Prius', '4Runner', 'Tacoma']
-        }
+        type: String
+    },
+    Vehicle_Make: {
+        type: String,
     },
     Year: {
         type: Number,
@@ -54,6 +43,10 @@ const vehcileSchema = new mongoose_1.Schema({
     Images: [{
             type: String
         }],
+    Status: {
+        type: String,
+        enum: ['For Sale', 'Pending', 'Sold'],
+    },
     Posted_By: {
         type: String
     },
