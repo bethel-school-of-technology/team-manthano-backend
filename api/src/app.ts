@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import vehcileRoutes from './routes/vehicleRoutes'
 import userRoutes from './routes/userRoutes'
+import makeRoutes from './routes/Make_Model_Route'
 
 const connectionString: string = 'mongodb://localhost:27017/carShop';
 
@@ -29,6 +30,7 @@ app.use(cors(corsOptions));
 // routes
 app.use('/api/vehicles', vehcileRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/makes', makeRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(404).end();
