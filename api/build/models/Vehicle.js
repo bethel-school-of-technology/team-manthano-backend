@@ -54,6 +54,15 @@ const vehcileSchema = new mongoose_1.Schema({
         type: Date,
         default: Date.now
     },
+    howdy: {
+        type: {
+            chevrolet: ['Bolt', 'Tahoe', 'Silverado', 'Camaro'],
+            ford: ['Mustang', 'Explorer', 'F-150'],
+            dodge: ['Charger', 'Durango', 'Ram', 'Challenger'],
+            toyota: ['Camry', 'Corolla', 'Prius', 'Rav4', 'Tacoma'],
+            honda: ['CR-V', 'Civic', 'Pilot', 'Ridgeline']
+        }
+    }
 });
 const Vehicles = (0, mongoose_1.model)('Vehicles', vehcileSchema);
 exports.Vehicles = Vehicles;

@@ -15,6 +15,7 @@ interface IVehicles extends Document {
  Status: String;
  Posted_By: string;
  Posted_At: Date,
+ howdy: Object
 }
 
 const vehcileSchema: Schema<IVehicles> = new Schema({
@@ -69,6 +70,15 @@ const vehcileSchema: Schema<IVehicles> = new Schema({
   type: Date,
   default: Date.now
  },
+ howdy: {
+  type: {
+   chevrolet: ['Bolt', 'Tahoe', 'Silverado', 'Camaro'],
+   ford: ['Mustang', 'Explorer', 'F-150'],
+   dodge: ['Charger', 'Durango', 'Ram', 'Challenger'],
+   toyota: ['Camry', 'Corolla', 'Prius', 'Rav4', 'Tacoma'],
+   honda: ['CR-V', 'Civic', 'Pilot', 'Ridgeline']
+  }
+ }
 });
 
 const Vehicles: Model<IVehicles> = model('Vehicles', vehcileSchema);
