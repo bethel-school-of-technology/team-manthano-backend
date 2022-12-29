@@ -6,5 +6,6 @@ const router = (0, express_1.Router)();
 router.get('/', Make_Model_Controller_1.getMakes);
 // Disabled so that it can't be changed
 // router.post('/', addMakeModel);
+// router.put('/:id', editMakeModel);
 // router.delete('/:id', deleteMakeModel);
 exports.default = router;

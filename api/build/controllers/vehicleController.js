@@ -22,6 +22,7 @@ const addVehicle = async (req, res, next) => {
     const newVehicle = new Vehicle_1.Vehicles({
         Name: req.body.Name,
         Vehicle_Manufacturer: req.body.Vehicle_Manufacturer,
+        Vehicle_Model: req.body.Vehicle_Model,
         Year: req.body.Year,
         Condition: req.body.Condition,
         Price: req.body.Price,
@@ -31,7 +32,7 @@ const addVehicle = async (req, res, next) => {
         Exterior_Color: req.body.Exterior_Color,
         Images: req.body.Images,
         Status: req.body.Status,
-        Posted_By: user._id,
+        Posted_By: req.body.Posted_By,
         Posted_At: req.body.Posted_At
     });
     try {
@@ -46,8 +47,6 @@ exports.addVehicle = addVehicle;
 const editVehicle = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (!user || user._id != req.body.Posted_By) {
-        console.log("USER: ", user?._id);
-        console.log("POST: ", req.body.Posted_By);
         return res.status(403).send();
     }
     let itemId = req.params.id;
@@ -55,6 +54,7 @@ const editVehicle = async (req, res, next) => {
         _id: itemId,
         Name: req.body.Name,
         Vehicle_Manufacturer: req.body.Vehicle_Manufacturer,
+        Vehicle_Model: req.body.Vehicle_Model,
         Year: req.body.Year,
         Condition: req.body.Condition,
         Price: req.body.Price,
@@ -72,12 +72,10 @@ const editVehicle = async (req, res, next) => {
 };
 exports.editVehicle = editVehicle;
 const deleteVehicle = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req);
-    if (!user || user._id != req.body.Posted_By) {
-        console.log("USER: ", user?._id);
-        console.log("VEHICLE: ", req.body.Posted_By);
-        return res.status(403).send();
-    }
+    // let user: IUsers | null = await verifyUser(req);
+    // if (!user || user._id != req.body.Posted_By) {
+    //     return res.status(403).send();
+    // }
     let itemId = req.params.id;
     let result = await Vehicle_1.Vehicles.findByIdAndDelete(itemId);
     res.status(200).json(result);

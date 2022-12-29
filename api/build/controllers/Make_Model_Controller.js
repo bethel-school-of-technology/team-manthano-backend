@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMakeModel = exports.addMakeModel = exports.getMakes = void 0;
+exports.deleteMakeModel = exports.editMakeModel = exports.addMakeModel = exports.getMakes = void 0;
 const Make_Model_1 = require("../models/Make_Model");
 const getMakes = async (req, res, next) => {
     let makeList = await Make_Model_1.MakeModel.find();
@@ -20,6 +20,16 @@ const addMakeModel = async (req, res, next) => {
     }
 };
 exports.addMakeModel = addMakeModel;
+const editMakeModel = async (req, res, next) => {
+    let itemId = req.params.id;
+    const updatedMakeModel = new Make_Model_1.MakeModel({
+        _id: itemId,
+        manufacturers: req.body
+    });
+    await Make_Model_1.MakeModel.findByIdAndUpdate(itemId, { $set: updatedMakeModel });
+    res.status(200).json(updatedMakeModel);
+};
+exports.editMakeModel = editMakeModel;
 const deleteMakeModel = async (req, res, next) => {
     let itemId = req.params.id;
     let result = await Make_Model_1.MakeModel.findByIdAndDelete(itemId);

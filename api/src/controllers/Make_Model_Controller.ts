@@ -19,6 +19,19 @@ export const addMakeModel: RequestHandler = async (req, res, next) => {
     }
 }
 
+export const editMakeModel: RequestHandler = async (req, res, next) => {
+
+    let itemId = req.params.id;
+    const updatedMakeModel: IMakeModel = new MakeModel({
+        _id: itemId,
+        manufacturers: req.body
+    });
+
+    await MakeModel.findByIdAndUpdate(itemId, { $set: updatedMakeModel })
+
+    res.status(200).json(updatedMakeModel);
+}
+
 export const deleteMakeModel: RequestHandler = async (req, res, next) => {
 
     let itemId = req.params.id;

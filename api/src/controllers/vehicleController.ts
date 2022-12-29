@@ -24,6 +24,7 @@ export const addVehicle: RequestHandler = async (req, res, next) => {
     const newVehicle: IVehicles = new Vehicles({
         Name: req.body.Name,
         Vehicle_Manufacturer: req.body.Vehicle_Manufacturer,
+        Vehicle_Model: req.body.Vehicle_Model,
         Year: req.body.Year,
         Condition: req.body.Condition,
         Price: req.body.Price,
@@ -33,7 +34,7 @@ export const addVehicle: RequestHandler = async (req, res, next) => {
         Exterior_Color: req.body.Exterior_Color,
         Images: req.body.Images,
         Status: req.body.Status,
-        Posted_By: user._id,
+        Posted_By: req.body.Posted_By,
         Posted_At: req.body.Posted_At
     });
 
@@ -50,8 +51,6 @@ export const editVehicle: RequestHandler = async (req, res, next) => {
     let user: IUsers | null = await verifyUser(req);
 
     if (!user || user._id != req.body.Posted_By) {
-        console.log("USER: ", user?._id)
-        console.log("POST: ", req.body.Posted_By)
         return res.status(403).send();
     }
 
@@ -60,6 +59,7 @@ export const editVehicle: RequestHandler = async (req, res, next) => {
         _id: itemId,
         Name: req.body.Name,
         Vehicle_Manufacturer: req.body.Vehicle_Manufacturer,
+        Vehicle_Model: req.body.Vehicle_Model,
         Year: req.body.Year,
         Condition: req.body.Condition,
         Price: req.body.Price,
@@ -83,8 +83,6 @@ export const deleteVehicle: RequestHandler = async (req, res, next) => {
     let user: IUsers | null = await verifyUser(req);
 
     if (!user || user._id != req.body.Posted_By) {
-        console.log("USER: ", user?._id)
-        console.log("VEHICLE: ", req.body.Posted_By)
         return res.status(403).send();
     }
 

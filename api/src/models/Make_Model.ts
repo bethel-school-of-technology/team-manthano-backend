@@ -7,11 +7,11 @@ interface IMakeModel extends Document {
 const makeModelSchema: Schema<IMakeModel> = new Schema({
  manufacturers: {
   type: {
-   chevrolet: ['Bolt', 'Tahoe', 'Silverado', 'Camaro'],
-   ford: ['Mustang', 'Explorer', 'F-150'],
-   dodge: ['Charger', 'Durango', 'Ram', 'Challenger'],
-   toyota: ['Camry', 'Corolla', 'Prius', 'Rav4', 'Tacoma'],
-   honda: ['CR-V', 'Civic', 'Pilot', 'Ridgeline']
+   Chevrolet: ['Bolt', 'Tahoe', 'Silverado', 'Camaro'],
+   Ford: ['Mustang', 'Explorer', 'F-150'],
+   Dodge: ['Charger', 'Durango', 'Ram', 'Challenger'],
+   Toyota: ['Camry', 'Corolla', 'Prius', 'Rav4', 'Tacoma'],
+   Honda: ['CR-V', 'Civic', 'Pilot', 'Ridgeline']
   }
  },
 });
