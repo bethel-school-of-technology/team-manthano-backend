@@ -56,7 +56,8 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 }
 
 export const getUser: RequestHandler = async (req, res, next) => {
-    let user: IUsers | null = await verifyUser(req);
+    let user_id = req.params.id;
+    let user = await Users.findById(user_id);
 
     let userVehicles;
     if (user) {
