@@ -113,3 +113,44 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
     let result = await Users.findByIdAndDelete(userId);
     res.status(200).json(result);
 }
+
+// Messages
+export const getUserMessages: RequestHandler = async (req, res, next) => {
+    let user: IUsers | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    res.status(200).json(user.messages);
+}
+
+export const postUserMessage: RequestHandler = async (req, res, next) => {
+    let user: IUsers | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let userId = req.params.id;
+    console.log("ID: ", req.params.id)
+    const newMessage: IUsers = new Users({
+        _id: userId,
+        username: req.body.username,
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        messages: req.body.messages
+    });
+
+    console.log("REQ: ", newMessage)
+
+    try {
+        await Users.findByIdAndUpdate(userId, { $set: newMessage })
+        res.status(201).json(newMessage);
+    }
+    catch (err) {
+        console.log("ERROR: ", err)
+        res.status(400).send(err);
+    }
+}
