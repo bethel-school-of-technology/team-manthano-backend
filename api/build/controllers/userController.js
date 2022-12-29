@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.getUsers = exports.getUser = exports.loginUser = exports.createUser = void 0;
+exports.postUserMessage = exports.getUserMessages = exports.deleteUser = exports.updateUser = exports.getUsers = exports.getUser = exports.loginUser = exports.createUser = void 0;
 const User_1 = require("../models/User");
 const Vehicle_1 = require("../models/Vehicle");
 const auth_1 = require("../services/auth");
@@ -101,17 +101,38 @@ const deleteUser = async (req, res, next) => {
     res.status(200).json(result);
 };
 exports.deleteUser = deleteUser;
-// let itemId = req.params.id;
-// let user = await Users.findById(itemId);
-// // router.get('/:id/messages', getMessages)
-// // Messages Controller
-// export const getMessages: RequestHandler = async (req, res, next) => {
-//     // let user: IUsers | null = await verifyUser(req);
-//     // if (!user) {
-//     //     return res.status(403).send();
-//     // }
-//     console.log('REQ: ', req.params.id)
-//     let itemId = req.params.id;
-//     let messages = await Users.findById(itemId);
-//     res.status(200).json(messages);
-// }
+// Messages
+const getUserMessages = async (req, res, next) => {
+    let user = await (0, auth_1.verifyUser)(req);
+    if (!user) {
+        return res.status(403).send();
+    }
+    res.status(200).json(user.messages);
+};
+exports.getUserMessages = getUserMessages;
+const postUserMessage = async (req, res, next) => {
+    let user = await (0, auth_1.verifyUser)(req);
+    if (!user) {
+        return res.status(403).send();
+    }
+    let userId = req.params.id;
+    console.log("ID: ", req.params.id);
+    const newMessage = new User_1.Users({
+        _id: userId,
+        username: req.body.username,
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        messages: req.body.messages
+    });
+    console.log("REQ: ", newMessage);
+    try {
+        await User_1.Users.findByIdAndUpdate(userId, { $set: newMessage });
+        res.status(201).json(newMessage);
+    }
+    catch (err) {
+        console.log("ERROR: ", err);
+        res.status(400).send(err);
+    }
+};
+exports.postUserMessage = postUserMessage;
