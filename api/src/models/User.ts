@@ -9,11 +9,13 @@ interface IUsers extends Document {
  lastName: string;
  zip: Number;
  profile_image: String;
+ messages: Object
 }
 
 const userSchema: Schema<IUsers> = new Schema({
  username: {
   type: String,
+  unique: true,
   required: true,
  },
  email: {
@@ -40,6 +42,9 @@ const userSchema: Schema<IUsers> = new Schema({
  profile_image: {
   type: String,
  },
+ messages: {
+  type: Object
+ }
 });
 
 const Users: Model<IUsers> = model('Users', userSchema);

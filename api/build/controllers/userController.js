@@ -52,7 +52,8 @@ const loginUser = async (req, res, next) => {
 };
 exports.loginUser = loginUser;
 const getUser = async (req, res, next) => {
-    let user = await (0, auth_1.verifyUser)(req);
+    let user_id = req.params.id;
+    let user = await User_1.Users.findById(user_id);
     let userVehicles;
     if (user) {
         userVehicles = await (await Vehicle_1.Vehicles.find({})).filter(vehicle => vehicle.Posted_By == user?._id);
@@ -100,3 +101,17 @@ const deleteUser = async (req, res, next) => {
     res.status(200).json(result);
 };
 exports.deleteUser = deleteUser;
+// let itemId = req.params.id;
+// let user = await Users.findById(itemId);
+// // router.get('/:id/messages', getMessages)
+// // Messages Controller
+// export const getMessages: RequestHandler = async (req, res, next) => {
+//     // let user: IUsers | null = await verifyUser(req);
+//     // if (!user) {
+//     //     return res.status(403).send();
+//     // }
+//     console.log('REQ: ', req.params.id)
+//     let itemId = req.params.id;
+//     let messages = await Users.findById(itemId);
+//     res.status(200).json(messages);
+// }
