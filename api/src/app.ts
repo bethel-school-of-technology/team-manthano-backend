@@ -5,7 +5,9 @@ import vehcileRoutes from './routes/vehicleRoutes'
 import userRoutes from './routes/userRoutes'
 import makeRoutes from './routes/Make_Model_Route'
 
-const connectionString: string = 'mongodb://localhost:27017/carShop';
+const connectionString: string = 'mongodb+srv://team-manthano:bst-manthano-2022@team-manthano.bf8aadz.mongodb.net/?retryWrites=true&w=majority';
+
+// const connectionString: string = 'mongodb://localhost:27017/carShop';
 
 mongoose.connect(connectionString).then(
     () => console.log('database connection successful!'),
