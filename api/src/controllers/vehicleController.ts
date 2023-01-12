@@ -38,6 +38,8 @@ export const addVehicle: RequestHandler = async (req, res, next) => {
         Posted_At: req.body.Posted_At
     });
 
+    console.log("NEW: ", newVehicle.Images)
+
     try {
         await newVehicle.save();
         res.status(201).json(newVehicle);

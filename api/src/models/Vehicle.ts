@@ -11,7 +11,7 @@ interface IVehicles extends Document {
  Body_Style: string;
  Fuel_Economy: Object;
  Exterior_Color: string;
- Images: Array<String>;
+ Images: string;
  Status: String;
  Posted_By: string;
  Posted_At: Date,
@@ -59,9 +59,9 @@ const vehcileSchema: Schema<IVehicles> = new Schema({
   type: String,
   enum: ['Black', 'Blue', 'Brown', 'Burgundy', 'Gray', 'Green', 'White', 'Silver', 'Red'],
  },
- Images: [{
+ Images: {
   type: String
- }],
+ },
  Status: {
   type: String,
   enum: ['For Sale', 'Pending', 'Sold'],

@@ -44,9 +44,9 @@ const vehcileSchema = new mongoose_1.Schema({
         type: String,
         enum: ['Black', 'Blue', 'Brown', 'Burgundy', 'Gray', 'Green', 'White', 'Silver', 'Red'],
     },
-    Images: [{
-            type: String
-        }],
+    Images: {
+        type: String
+    },
     Status: {
         type: String,
         enum: ['For Sale', 'Pending', 'Sold'],

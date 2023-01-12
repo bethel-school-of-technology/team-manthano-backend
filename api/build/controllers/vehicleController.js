@@ -35,6 +35,7 @@ const addVehicle = async (req, res, next) => {
         Posted_By: req.body.Posted_By,
         Posted_At: req.body.Posted_At
     });
+    console.log("NEW: ", newVehicle.Images);
     try {
         await newVehicle.save();
         res.status(201).json(newVehicle);
