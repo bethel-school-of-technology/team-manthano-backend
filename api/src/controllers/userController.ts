@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { Users, IUsers } from "../models/User";
 import { Vehicles } from "../models/Vehicle";
 import { comparePasswords, hashPassword, signUserToken, verifyUser } from "../services/auth";
+import { ObjectId } from "mongoose";
 
 export const createUser: RequestHandler = async (req, res, next) => {
     const newUser: IUsers = new Users({
@@ -56,19 +57,15 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 }
 
 export const getUser: RequestHandler = async (req, res, next) => {
-    let user_id = req.params.id;
-    let user = await Users.findById(user_id);
-
-    let userVehicles;
-    if (user) {
-        userVehicles = await (await Vehicles.find({})).filter(vehicle => vehicle.Posted_By == user?._id);
-    }
-
+    let user: IUsers | null = await verifyUser(req)
+   
+    
     let allData = {
         user: user,
-        vehicles: userVehicles
+        
     }
-
+    // console.log(allData);
+    
     res.status(200).json(allData);
 }
 
@@ -85,12 +82,12 @@ export const updateUser: RequestHandler = async (req, res, next) => {
     }
 
     let userId = req.params.id;
+    // console.log("ID: ", req.params.id)
     const updatedUser: IUsers = new Users({
         _id: userId,
         username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
-        password: req.body.password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         zip: req.body.zip,
