@@ -8,7 +8,7 @@ router.post('/signin', userController_1.loginUser);
 router.get('/', userController_1.getUsers);
 router.put('/:id', userController_1.updateUser);
 router.delete('/:id', userController_1.deleteUser);
-router.get('/:id', userController_1.getUser);
+router.get('/oneUser', userController_1.getUser);
 router.get('/:id/messages', userController_1.getUserMessages);
 router.put('/:id/messages', userController_1.postUserMessage);
 exports.default = router;

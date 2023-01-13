@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postUserMessage = exports.getUserMessages = exports.deleteUser = exports.updateUser = exports.getUsers = exports.getUser = exports.loginUser = exports.createUser = void 0;
 const User_1 = require("../models/User");
-const Vehicle_1 = require("../models/Vehicle");
 const auth_1 = require("../services/auth");
 const createUser = async (req, res, next) => {
     const newUser = new User_1.Users({
@@ -52,16 +51,11 @@ const loginUser = async (req, res, next) => {
 };
 exports.loginUser = loginUser;
 const getUser = async (req, res, next) => {
-    let user_id = req.params.id;
-    let user = await User_1.Users.findById(user_id);
-    let userVehicles;
-    if (user) {
-        userVehicles = await (await Vehicle_1.Vehicles.find({})).filter(vehicle => vehicle.Posted_By == user?._id);
-    }
+    let user = await (0, auth_1.verifyUser)(req);
     let allData = {
         user: user,
-        vehicles: userVehicles
     };
+    // console.log(allData);
     res.status(200).json(allData);
 };
 exports.getUser = getUser;
@@ -76,12 +70,12 @@ const updateUser = async (req, res, next) => {
         return res.status(403).send();
     }
     let userId = req.params.id;
+    // console.log("ID: ", req.params.id)
     const updatedUser = new User_1.Users({
         _id: userId,
         username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
-        password: req.body.password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         zip: req.body.zip,

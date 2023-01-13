@@ -8,7 +8,7 @@ router.post('/signin', loginUser);
 router.get('/', getUsers);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
-router.get('/:id', getUser)
+router.get('/oneUser', getUser)
 router.get('/:id/messages', getUserMessages)
 router.put('/:id/messages', postUserMessage)
 
