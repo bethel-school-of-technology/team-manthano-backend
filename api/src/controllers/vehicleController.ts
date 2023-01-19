@@ -84,7 +84,7 @@ export const deleteVehicle: RequestHandler = async (req, res, next) => {
 
     let user: IUsers | null = await verifyUser(req);
 
-    if (!user || user._id != req.body.Posted_By) {
+    if (!user) {
         return res.status(403).send();
     }
 

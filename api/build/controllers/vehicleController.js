@@ -74,10 +74,11 @@ const editVehicle = async (req, res, next) => {
 exports.editVehicle = editVehicle;
 const deleteVehicle = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    if (!user || user._id != req.body.Posted_By) {
+    if (!user) {
         return res.status(403).send();
     }
     let itemId = req.params.id;
+    console.log("");
     let result = await Vehicle_1.Vehicles.findByIdAndDelete(itemId);
     res.status(200).json(result);
 };

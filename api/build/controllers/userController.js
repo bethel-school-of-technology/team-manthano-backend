@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postUserMessage = exports.getUserMessages = exports.deleteUser = exports.updateUser = exports.getUsers = exports.getUser = exports.loginUser = exports.createUser = void 0;
 const User_1 = require("../models/User");
+const Vehicle_1 = require("../models/Vehicle");
 const auth_1 = require("../services/auth");
 const createUser = async (req, res, next) => {
     const newUser = new User_1.Users({
@@ -52,10 +53,14 @@ const loginUser = async (req, res, next) => {
 exports.loginUser = loginUser;
 const getUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
+    let userVehicles;
+    if (user) {
+        userVehicles = await (await Vehicle_1.Vehicles.find({})).filter(vehicle => vehicle.Posted_By == user?._id);
+    }
     let allData = {
         user: user,
+        vehicles: userVehicles
     };
-    // console.log(allData);
     res.status(200).json(allData);
 };
 exports.getUser = getUser;

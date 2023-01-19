@@ -58,14 +58,18 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 
 export const getUser: RequestHandler = async (req, res, next) => {
     let user: IUsers | null = await verifyUser(req)
-   
-    
+
+
+    let userVehicles;
+    if (user) {
+        userVehicles = await (await Vehicles.find({})).filter(vehicle => vehicle.Posted_By == user?._id);
+    }
+
     let allData = {
         user: user,
-        
+        vehicles: userVehicles
     }
-    // console.log(allData);
-    
+
     res.status(200).json(allData);
 }
 
