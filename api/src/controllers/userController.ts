@@ -78,6 +78,13 @@ export const getUsers: RequestHandler = async (req, res, next) => {
     res.status(200).json(userList)
 }
 
+export const getOneUser: RequestHandler = async (req, res, next) => {
+    let userId = req.params.id
+    let user = await Users.findById(userId)
+
+    res.status(200).json(user);
+}
+
 export const updateUser: RequestHandler = async (req, res, next) => {
     let user: IUsers | null = await verifyUser(req);
 
