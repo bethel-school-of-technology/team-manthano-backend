@@ -78,7 +78,6 @@ const deleteVehicle = async (req, res, next) => {
         return res.status(403).send();
     }
     let itemId = req.params.id;
-    console.log("");
     let result = await Vehicle_1.Vehicles.findByIdAndDelete(itemId);
     res.status(200).json(result);
 };
